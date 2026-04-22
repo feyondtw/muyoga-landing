@@ -447,6 +447,137 @@ function V3Landing({ themeKey = 'ivory', status = 'countdown' }) {
         </div>
       </section>
 
+      {/* ─── OUR STORY — brand narrative ─── */}
+      {(() => {
+        const storyText = {
+          fontFamily: '"Noto Serif TC","Cormorant Garamond",serif',
+          fontSize: 'clamp(16px, 1.4vw, 18px)',
+          lineHeight: 2.1,
+          color: t.ink,
+          letterSpacing: '0.04em',
+          textAlign: 'center',
+          whiteSpace: 'pre-line',
+        };
+        const Divider = () => (
+          <div style={{ borderTop: `1px solid ${t.line}`, width: 180, margin: '64px auto' }}/>
+        );
+        return (
+          <section id="story" style={{ padding: '120px 56px', maxWidth: 900, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 64 }}>
+              <div style={{ fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: t.muted, marginBottom: 16 }}>
+                Our Story · About MUYOGA
+              </div>
+              <h2 style={{
+                fontFamily: '"Noto Serif TC","Cormorant Garamond",serif',
+                fontSize: 'clamp(36px, 5vw, 52px)', fontWeight: 400,
+                margin: 0, letterSpacing: '0.04em', color: t.ink,
+              }}>
+                關於 MUYOGA
+              </h2>
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontFamily: '"Noto Serif TC","Cormorant Garamond",serif',
+                fontStyle: 'italic',
+                fontSize: 'clamp(18px, 2.2vw, 22px)',
+                lineHeight: 2,
+                color: t.ink,
+                letterSpacing: '0.05em',
+                whiteSpace: 'pre-line',
+              }}>
+                {`「瑜伽是一盞燈，一旦點燃，永不熄滅。
+你練得越深，它燃得越亮。」`}
+              </div>
+              <div style={{
+                fontFamily: '"Cormorant Garamond", serif',
+                fontStyle: 'italic', fontSize: 15,
+                color: t.muted, marginTop: 20,
+                letterSpacing: '0.04em',
+              }}>
+                — B.K.S. Iyengar
+              </div>
+            </div>
+
+            <Divider/>
+
+            <div style={storyText}>
+              {`MUYOGA 不是一個潮流瑜伽品牌，
+
+它是這些年身心回到正位鍛鍊的場域——
+一條源自印度普納，
+流經峇里島，
+再洋流到台灣島的脈流。`}
+            </div>
+
+            <Divider/>
+
+            <div style={storyText}>
+              {`我們的瑜伽源頭，
+是印度普納艾揚格系統——
+B.K.S. Iyengar 大師親手建立、
+以精確對位為根基、
+以覺察為核心的嚴謹傳承。
+
+而把這條血脈傳給我們的，
+是恩師 OLOP——
+位於峇里島的 OLOP Bali Iyengar Yoga Studio。
+
+有幾年，我們會回到那裡，
+讓身心跟隨 OLOP 接受師資培訓，
+讓根，再往下一點。`}
+            </div>
+
+            <Divider/>
+
+            <div style={storyText}>
+              {`MUYOGA 裡的每一位老師，
+都走過這條同樣的路——
+印度普納艾揚格系統的專業師資。
+
+我們不追流行、不做表演。
+每一年一起跟隨 OLOP 的師資培訓，
+把最純粹的系統，
+在彼此身上，也在學員身上，
+再埋得更深一些。`}
+            </div>
+
+            <Divider/>
+
+            <div style={storyText}>
+              {`日常的課程，
+由芳祝老師帶領常態規律練習——
+
+不是偶爾的靈感，
+是日復一日，
+讓瑜伽真正成為生活的方式。`}
+            </div>
+
+            <Divider/>
+
+            <div style={storyText}>
+              {`這，就是 MUYOGA 想留下的事情：
+
+一盞不熄滅的燈，
+一條回家的路，
+一場一輩子的練習。`}
+            </div>
+
+            <div style={{
+              fontFamily: '"Cormorant Garamond","Noto Serif TC",serif',
+              fontStyle: 'italic',
+              fontSize: 15,
+              color: t.muted,
+              textAlign: 'center',
+              marginTop: 72,
+              letterSpacing: '0.08em',
+            }}>
+              —  MUYOGA × OLOP Bali Iyengar Studio
+            </div>
+          </section>
+        );
+      })()}
+
       {/* ─── FINAL CTA — inverse ─── */}
       <section style={{ background: t.ink, color: t.bg, padding: '120px 56px', textAlign: 'center' }}>
         <div style={{ fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 28 }}>
@@ -472,10 +603,11 @@ function V3Landing({ themeKey = 'ivory', status = 'countdown' }) {
             </svg>
             加入 MUYOGA LINE
           </a>
-          <button style={{
+          <a href={`${APP_URL}/auth`} target="_blank" rel="noopener" style={{
             padding: '18px 32px', borderRadius: 999, background: 'transparent', color: t.bg,
-            border: `1px solid rgba(250,247,240,0.3)`, fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, cursor: 'pointer',
-          }}>Email 搶先註冊</button>
+            border: `1px solid rgba(250,247,240,0.3)`, fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, textDecoration: 'none',
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+          }}>Email 搶先註冊</a>
         </div>
       </section>
 
