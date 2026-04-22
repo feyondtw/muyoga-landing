@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MUYOGA · 靜下來，回到根本 — 2026.04.30 上線</title>
+<meta name="description" content="DHYANA 根本瑜伽線上平台 MUYOGA 2026/4/30 上線。加入 LINE 官方帳號，第一個收到上線通知。"/>
+
+<meta property="og:title" content="MUYOGA · 靜下來，回到根本"/>
+<meta property="og:description" content="DHYANA 根本瑜伽線上平台 · 2026.04.30 上線"/>
+<meta property="og:image" content="og-image.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://muyoga.muzen.store/"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;font-family:'Inter','Noto Sans TC',system-ui,sans-serif;background:#faf7f0;color:#2d241c}
+  *{box-sizing:border-box}
+  a{color:inherit}
+  @media (max-width: 900px) {
+    section[style*="gridTemplateColumns: '1fr 1.2fr'"],
+    section[style*="grid-template-columns: 1fr 1.2fr"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+    section[style*="grid-template-columns: repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
+    section { padding-left: 24px !important; padding-right: 24px !important; }
+    h1 { font-size: clamp(64px, 18vw, 110px) !important; }
+    h2 { font-size: 36px !important; }
+  }
+</style>
+</head>
+<body>
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" fill="#faf7f0"/>
+      <text x="50" y="58" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="22" font-weight="500" fill="#2d241c" letter-spacing="-1">MUYOGA</text>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <script type="text/babel" data-presets="react">
+// MUYOGA Landing — shared building blocks for all 3 variations
+// Palette tokens per-theme are passed via `t` prop.
+
+// ─── Theme palettes ────────────────────────────────────────────────
+const THEMES = {
+  warm: {
+    name: 'warm',
+    bg: '#FBF8F2',
+    cream: '#F4EDDF',
+    paper: '#EFE6D3',
+    ink: '#2F2A24',
+    muted: '#786F62',
+    accent: '#6B5748',       // warm espresso — from screenshot header
+    accentDeep: '#4A3B2E',
+    soft: '#C4A47C',
+    line: 'rgba(47,42,36,0.10)',
+    hero: 'linear-gradient(180deg, #6B5748 0%, #5A4A3B 60%, #4A3B2E 100%)',
+    heroInk: '#F4EDDF',
+    card: '#FFFFFF',
+  },
+  forest: {
+    name: 'forest',
+    bg: '#F3F0E7',
+    cream: '#E8E3D2',
+    paper: '#DDD7C2',
+    ink: '#1F2A22',
+    muted: '#5A6A5C',
+    accent: '#3A4A38',       // deep moss
+    accentDeep: '#253023',
+    soft: '#8FA185',
+    line: 'rgba(31,42,34,0.10)',
+    hero: 'linear-gradient(180deg, #3A4A38 0%, #2C3A2B 60%, #1F2A22 100%)',
+    heroInk: '#E8E3D2',
+    card: '#FBF9F2',
+  },
+  ivory: {
+    name: 'ivory',
+    bg: '#FAF7F0',
+    cream: '#F0EBE0',
+    paper: '#E4DDCD',
+    ink: '#1C1B17',
+    muted: '#6F6B5F',
+    accent: '#1C1B17',       // near-black ink
+    accentDeep: '#000',
+    soft: '#B8A484',
+    line: 'rgba(28,27,23,0.10)',
+    hero: 'linear-gradient(180deg, #FAF7F0 0%, #F0EBE0 100%)',
+    heroInk: '#1C1B17',
+    card: '#FFFFFF',
+  },
+};
+
+// ─── Tiny SVGs ────────────────────────────────────────────────────
+const MLogo = ({ color, small }) => (
+  <svg width={small ? 120 : 160} height={small ? 28 : 38} viewBox="0 0 160 38">
+    <text x="0" y="26" fontFamily='"Cormorant Garamond", serif' fontWeight="500" fontSize="28" letterSpacing="0.14em" fill={color}>MUYOGA</text>
+    <text x="0" y="36" fontFamily='"Inter", system-ui' fontWeight="400" fontSize="7" letterSpacing="0.32em" fill={color} opacity="0.7">BY DHYANA · 根本</text>
+  </svg>
+);
+
+const ArrowRight = ({ c = '#000', s = 14 }) => (
+  <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+  </svg>
+);
+
+// Decorative silhouettes / botanicals
+function Botanical({ color, opacity = 0.25, style }) {
+  return (
+    <svg width="480" height="360" viewBox="0 0 480 360" style={{ position: 'absolute', pointerEvents: 'none', ...style }}>
+      <g stroke={color} strokeWidth="0.8" fill="none" opacity={opacity} strokeLinecap="round">
+        <path d="M50 300 Q 80 200, 120 180 T 200 100"/>
+        <path d="M120 180 q -10 -20, -30 -25" />
+        <path d="M120 180 q 10 -20, 30 -25" />
+        <path d="M160 140 q -10 -14, -24 -16" />
+        <path d="M160 140 q 10 -14, 24 -16" />
+        <path d="M190 110 q -8 -10, -18 -12" />
+        <path d="M190 110 q 8 -10, 18 -12" />
+        <circle cx="200" cy="100" r="2.5" fill={color} opacity={opacity * 2}/>
+      </g>
+    </svg>
+  );
+}
+
+// Soft painterly figure (meditating silhouette)
+function FigureSilhouette({ w = 240, h = 300, tones = ['#E8D9C2', '#C49A7A', '#7A6553'] }) {
+  const id = 'fig' + Math.random().toString(36).slice(2, 6);
+  return (
+    <svg width={w} height={h} viewBox="0 0 240 300">
+      <defs>
+        <radialGradient id={id} cx="40%" cy="30%">
+          <stop offset="0%" stopColor={tones[0]}/>
+          <stop offset="60%" stopColor={tones[1]}/>
+          <stop offset="100%" stopColor={tones[2]}/>
+        </radialGradient>
+      </defs>
+      {/* seated meditation silhouette, lotus pose */}
+      <g fill={`url(#${id})`}>
+        {/* head */}
+        <ellipse cx="120" cy="70" rx="28" ry="32"/>
+        {/* neck + torso */}
+        <path d="M100 95 Q 95 130, 80 180 Q 70 220, 70 250 L 170 250 Q 170 220, 160 180 Q 145 130, 140 95 Q 130 110, 120 110 Q 110 110, 100 95 Z"/>
+        {/* arms resting */}
+        <ellipse cx="78" cy="205" rx="22" ry="18" transform="rotate(-15 78 205)"/>
+        <ellipse cx="162" cy="205" rx="22" ry="18" transform="rotate(15 162 205)"/>
+        {/* crossed legs base */}
+        <path d="M50 245 Q 120 260, 190 245 Q 200 275, 180 285 L 60 285 Q 40 275, 50 245 Z"/>
+      </g>
+      {/* light highlight */}
+      <ellipse cx="108" cy="60" rx="10" ry="14" fill="#fff" opacity="0.25"/>
+    </svg>
+  );
+}
+
+// Painterly class photo placeholder
+function SoftPhoto({ w, h, scheme = 0, tag }) {
+  const id = 'sp' + Math.random().toString(36).slice(2, 6);
+  const schemes = [
+    { a: '#D4C4A8', b: '#8A9A82', c: '#5B6B55' },
+    { a: '#E8D9C2', b: '#C49A7A', c: '#8B6F55' },
+    { a: '#CFD8C5', b: '#7A8A72', c: '#3E4A38' },
+    { a: '#EAE0CE', b: '#B5A485', c: '#6E5F48' },
+    { a: '#DED3B8', b: '#A8967A', c: '#6A5A48' },
+  ];
+  const s = schemes[scheme % schemes.length];
+  return (
+    <div style={{ position: 'relative', width: w, height: h, borderRadius: 14, overflow: 'hidden', background: s.b }}>
+      <svg width="100%" height="100%" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id={id + 'g'} x1="0" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stopColor={s.a}/>
+            <stop offset="60%" stopColor={s.b}/>
+            <stop offset="100%" stopColor={s.c}/>
+          </linearGradient>
+        </defs>
+        <rect width={w} height={h} fill={`url(#${id}g)`}/>
+        <ellipse cx={w * 0.5} cy={h * 0.45} rx={w * 0.12} ry={h * 0.15} fill={s.c} opacity="0.6"/>
+        <path d={`M${w*0.3} ${h*0.75} Q ${w*0.5} ${h*0.65}, ${w*0.7} ${h*0.75} L ${w*0.7} ${h} L ${w*0.3} ${h} Z`} fill={s.c} opacity="0.55"/>
+        <ellipse cx={w*0.3} cy={h*0.2} rx={w*0.3} ry={h*0.15} fill="#fff" opacity="0.12"/>
+      </svg>
+      {tag && (
+        <div style={{
+          position: 'absolute', bottom: 10, left: 10,
+          padding: '4px 10px', borderRadius: 999,
+          background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(6px)',
+          fontFamily: '"Inter", system-ui', fontSize: 10,
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: '#2F2A24', fontWeight: 500,
+        }}>{tag}</div>
+      )}
+    </div>
+  );
+}
+
+// ─── Countdown hook ────────────────────────────────────────────────
+function useCountdown(target) {
+  const [t, setT] = React.useState(() => calc(target));
+  React.useEffect(() => {
+    const id = setInterval(() => setT(calc(target)), 1000);
+    return () => clearInterval(id);
+  }, [target]);
+  return t;
+}
+function calc(target) {
+  const diff = Math.max(0, target - Date.now());
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor(diff / 3600000) % 24;
+  const m = Math.floor(diff / 60000) % 60;
+  const s = Math.floor(diff / 1000) % 60;
+  return { d, h, m, s };
+}
+
+// Target launch date — 4/30/2026
+const LAUNCH_TARGET = new Date('2026-04-30T10:00:00+08:00').getTime();
+const MANUAL_URL = 'https://muyoga.muzen.store/manual.html';
+const APP_URL = 'https://muyoga.muzen.store';
+const LINE_URL = 'https://line.me/R/ti/p/@310idoln';
+
+// ─── Real photo placeholder — unsplash-style serene yoga image via CSS ─
+function HeroPhoto({ w = '100%', h = 520 }) {
+  const src = 'assets/hero-main.jpg';
+  return (
+    <div style={{
+      width: w, height: h, borderRadius: 0, overflow: 'hidden',
+      backgroundImage: `url("${src}")`,
+      backgroundSize: 'cover', backgroundPosition: 'center',
+      backgroundColor: '#3a2f24',
+    }}/>
+  );
+}
+
+function TeacherPhoto({ seed, w = 260, h = 340 }) {
+  // Deterministic unsplash portraits by seed
+  const pool = [
+    'https://images.unsplash.com/photo-1599447421416-3414500d18a5?w=600&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=600&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&auto=format&fit=crop',
+  ];
+  return (
+    <div style={{
+      width: w, height: h, borderRadius: 0, overflow: 'hidden',
+      backgroundImage: `url("${pool[seed % pool.length]}")`,
+      backgroundSize: 'cover', backgroundPosition: 'center',
+      backgroundColor: '#d6cbba',
+    }}/>
+  );
+}
+
+Object.assign(window, {
+  THEMES, MLogo, ArrowRight, Botanical, FigureSilhouette, SoftPhoto,
+  HeroPhoto, TeacherPhoto,
+  useCountdown, LAUNCH_TARGET, MANUAL_URL, APP_URL, LINE_URL,
+});
+
+// V3 — 米白極簡 / 現代排版 · Gallery-style ivory (FAVORITE)
+// Updates: 4/30 countdown · upright title, no period · real photos · real links · teacher DB note
+
+function V3Landing({ themeKey = 'ivory', status = 'countdown' }) {
+  const t = THEMES[themeKey];
+  const { d, h, m, s } = useCountdown(LAUNCH_TARGET);
+
+  return (
+    <div style={{ background: t.bg, color: t.ink, fontFamily: '"Inter","Noto Sans TC",system-ui,sans-serif', width: '100%', minHeight: '100%' }}>
+      {/* ─── Top nav ─── */}
+      <div style={{ padding: '28px 56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <MLogo color={t.ink}/>
+        <div style={{ display: 'flex', gap: 28, fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: t.muted }}>
+          <a href="#about" style={{color:'inherit',textDecoration:'none'}}>About</a>
+          <a href={MANUAL_URL} target="_blank" rel="noopener" style={{color:'inherit',textDecoration:'none'}}>Manual</a>
+          <a href="#teachers" style={{color:'inherit',textDecoration:'none'}}>Teachers</a>
+          <a href={LINE_URL} target="_blank" rel="noopener" style={{color:'inherit',textDecoration:'none'}}>LINE</a>
+        </div>
+      </div>
+
+      {/* ─── Typographic hero ─── */}
+      <section style={{ padding: '48px 56px 80px', maxWidth: 1400, margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: t.muted, marginBottom: 28 }}>
+          {status === 'live' ? 'Now Live · 04 / 30 / 2026' : status === 'soon' ? 'Coming Soon' : 'Launching · 04 / 30 / 2026'}
+        </div>
+
+        {/* English wordmark */}
+        <h1 style={{
+          fontFamily: '"Cormorant Garamond",serif',
+          fontSize: 'clamp(72px, 11vw, 156px)', fontWeight: 400, lineHeight: 0.9,
+          margin: '0 0 24px', letterSpacing: '-0.035em',
+        }}>
+          MUYOGA
+        </h1>
+
+        {/* Traditional Chinese tagline — larger, upright, no period */}
+        <div style={{
+          fontFamily: '"Noto Serif TC","Cormorant Garamond",serif',
+          fontWeight: 400,
+          fontSize: 'clamp(32px, 4.2vw, 52px)',
+          lineHeight: 1.3,
+          letterSpacing: '0.08em',
+          color: t.ink,
+          marginBottom: 22,
+        }}>
+          靜下來，回到根本
+        </div>
+
+        <div style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'italic', fontSize: 20, color: t.muted, marginBottom: 48, letterSpacing: '-0.005em' }}>
+          a quiet companion for your practice
+        </div>
+
+        {status === 'countdown' && (
+          <div style={{ display: 'inline-flex', gap: 0, padding: '16px 32px', border: `1px solid ${t.line}`, borderRadius: 999, marginBottom: 36 }}>
+            {[['Days', d], ['Hrs', h], ['Min', m], ['Sec', s]].map(([l, v], i, a) => (
+              <React.Fragment key={l}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                  <span style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 28, fontWeight: 500, lineHeight: 1 }}>{String(v).padStart(2, '0')}</span>
+                  <span style={{ fontSize: 10, letterSpacing: '0.2em', color: t.muted, textTransform: 'uppercase' }}>{l}</span>
+                </div>
+                {i < a.length - 1 && <span style={{ margin: '0 18px', color: t.muted, opacity: 0.4 }}>·</span>}
+              </React.Fragment>
+            ))}
+          </div>
+        )}
+
+        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href={LINE_URL} target="_blank" rel="noopener" style={{
+            padding: '16px 30px', borderRadius: 999, border: 'none', background: t.ink, color: t.bg,
+            fontSize: 13, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 500,
+            display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none',
+          }}>
+            Join LINE <ArrowRight c={t.bg}/>
+          </a>
+          <a href={MANUAL_URL} target="_blank" rel="noopener" style={{
+            padding: '16px 30px', borderRadius: 999, border: `1px solid ${t.line}`,
+            background: 'transparent', color: t.ink,
+            fontSize: 13, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 500, textDecoration: 'none',
+          }}>View Manual</a>
+        </div>
+      </section>
+
+      {/* ─── Hero photo band ─── */}
+      <section style={{ padding: '0 56px 120px', maxWidth: 1400, margin: '0 auto' }}>
+        <HeroPhoto h={520}/>
+        <div style={{ fontFamily: '"Cormorant Garamond",serif', fontStyle: 'italic', fontSize: 14, color: t.muted, marginTop: 14, letterSpacing: '-0.005em' }}>
+          Fig. 01 — morning light, Iyengar practice
+        </div>
+      </section>
+
+      {/* ─── About ─── */}
+      <section id="about" style={{ padding: '0 56px 120px', maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '0.9fr 1.3fr', gap: 72, alignItems: 'center' }}>
+        <div style={{ padding: '0 0 0 0' }}>
+          <div style={{ width: '95%', aspectRatio: '3/4', overflow: 'hidden',
+            backgroundImage: 'url("assets/bks-iyengar.jpg")',
+            backgroundSize: 'cover', backgroundPosition: 'center 20%',
+          }}/>
+        </div>
+        <div>
+          <div style={{ fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: t.muted, marginBottom: 18 }}>
+            About · 關於
+          </div>
+          <div style={{
+            fontFamily: '"Noto Serif TC","Cormorant Garamond",serif',
+            fontSize: 30, lineHeight: 1.45, fontWeight: 400,
+            margin: '0 0 28px', letterSpacing: '0.02em',
+          }}>
+            為艾揚格練習者設計的<br/>安靜平台
+          </div>
+          <p style={{ fontSize: 15, lineHeight: 1.9, color: t.muted, margin: 0 }}>
+            MUYOGA 是 DHYANA 根本瑜伽的數位伙伴。
+            沒有社群壓力、沒有推播打擾，只有你、老師、與當下的練習。
+          </p>
+        </div>
+      </section>
+
+      {/* ─── 7 STEPS — minimal table ─── */}
+      <section style={{ padding: '100px 56px', borderTop: `1px solid ${t.line}`, borderBottom: `1px solid ${t.line}`, maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 56, flexWrap: 'wrap', gap: 20 }}>
+          <h2 style={{ fontFamily: '"Cormorant Garamond","Noto Serif TC",serif', fontSize: 56, fontWeight: 400, margin: 0, letterSpacing: '-0.015em' }}>
+            Seven steps
+          </h2>
+          <div style={{ fontFamily: '"Noto Serif TC",serif', fontSize: 20, color: '#3a2a1c', letterSpacing: '0.08em', fontWeight: 500 }}>從登入到報到，一次看完</div>
+        </div>
+        <div>
+          {[
+            ['01', 'Sign in', '登入帳號'],
+            ['02', 'Change password', '修改密碼'],
+            ['03', 'Notifications', '接收通知'],
+            ['04', 'Browse & book', '瀏覽課表 · 預約'],
+            ['05', 'Credits', '查看堂數'],
+            ['06', 'Cancel', '取消預約'],
+            ['07', 'Check in', 'QR Code 報到'],
+          ].map(([n, en, tc]) => (
+            <div key={n} style={{
+              display: 'grid', gridTemplateColumns: '80px 1.2fr 1fr 40px', gap: 24,
+              padding: '22px 0', borderBottom: `1px solid ${t.line}`, alignItems: 'center',
+            }}>
+              <div style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 22, color: t.muted, fontWeight: 400 }}>{n}</div>
+              <div style={{ fontFamily: '"Cormorant Garamond","Noto Serif TC",serif', fontSize: 22, fontWeight: 500, letterSpacing: '0.005em', color: t.ink }}>{en}</div>
+              <div style={{ fontFamily: '"Noto Serif TC","Cormorant Garamond",serif', fontSize: 22, color: '#3a2a1c', letterSpacing: '0.08em', fontWeight: 500 }}>{tc}</div>
+              <ArrowRight c={t.muted}/>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 48, textAlign: 'center' }}>
+          <a href={MANUAL_URL} target="_blank" rel="noopener" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 12,
+            padding: '18px 32px', borderRadius: 999, border: `1px solid ${t.ink}`,
+            color: t.ink, textDecoration: 'none',
+            fontSize: 16, letterSpacing: '0.12em', fontWeight: 500,
+            fontFamily: '"Noto Serif TC",serif',
+          }}>
+            查看完整手冊 <ArrowRight c={t.ink}/>
+          </a>
+        </div>
+      </section>
+
+      {/* ─── TEACHERS — placeholder / DB-bound ─── */}
+      <section id="teachers" style={{ padding: '120px 56px', maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div style={{ fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: t.muted, marginBottom: 14 }}>
+            Teachers · 師資
+          </div>
+          <h2 style={{ fontFamily: '"Cormorant Garamond","Noto Serif TC",serif', fontSize: 42, fontWeight: 400, margin: 0, letterSpacing: '-0.015em' }}>
+            People who teach here
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 40, maxWidth: 900, margin: '0 auto' }}>
+          {[
+            { n: 'Olop', en: '', sub: 'Iyengar Yoga · Intermediate III & Advanced', img: 'assets/teacher-olop.jpg' },
+            { n: '芳祝', en: 'Alice', sub: 'Iyengar Yoga · Level 1', img: 'assets/teacher-alice.jpg' },
+          ].map((p, i) => (
+            <div key={i}>
+              <div style={{ width: '100%', aspectRatio: '3/4', overflow: 'hidden',
+                backgroundImage: `url("${p.img}")`, backgroundSize: 'cover', backgroundPosition: 'center',
+                backgroundColor: '#d6cbba',
+              }}/>
+              <div style={{ padding: '22px 2px 0' }}>
+                <div style={{ fontFamily: '"Noto Serif TC","Cormorant Garamond",serif', fontSize: 26, fontWeight: 500, letterSpacing: '0.03em', color: t.ink }}>
+                  {p.n} <span style={{ fontStyle: 'italic', color: t.muted, fontSize: 22, fontFamily: '"Cormorant Garamond",serif', marginLeft: 4 }}>{p.en}</span>
+                </div>
+                <div style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 16, color: t.muted, marginTop: 8, letterSpacing: '0.02em' }}>{p.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── FINAL CTA — inverse ─── */}
+      <section style={{ background: t.ink, color: t.bg, padding: '120px 56px', textAlign: 'center' }}>
+        <div style={{ fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 28 }}>
+          Stay in the loop
+        </div>
+        <h2 style={{
+          fontFamily: '"Cormorant Garamond","Noto Serif TC",serif',
+          fontSize: 64, fontWeight: 400, margin: '0 0 24px', lineHeight: 1.05, letterSpacing: '-0.02em',
+        }}>
+          See you on<br/>April 30
+        </h2>
+        <p style={{ fontSize: 15, lineHeight: 1.7, opacity: 0.75, maxWidth: 480, margin: '0 auto 40px' }}>
+          加入 LINE 官方帳號，上線當天第一個通知你
+        </p>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href={LINE_URL} target="_blank" rel="noopener" style={{
+            padding: '18px 32px', borderRadius: 999, border: 'none', background: '#06C755', color: '#fff',
+            fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600, textDecoration: 'none',
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+          }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+              <path d="M21 10.5C21 6.4 16.97 3 12 3S3 6.4 3 10.5c0 3.7 3.2 6.8 7.5 7.4.3.1.7.2.8.4.1.2.1.5 0 .7l-.2 1.1c-.1.3.3.6.6.4 4-2 6.6-4.3 7.7-5.9 1-1.3 1.6-2.8 1.6-4.6z"/>
+            </svg>
+            加入 MUYOGA LINE
+          </a>
+          <button style={{
+            padding: '18px 32px', borderRadius: 999, background: 'transparent', color: t.bg,
+            border: `1px solid rgba(250,247,240,0.3)`, fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 500, cursor: 'pointer',
+          }}>Email 搶先註冊</button>
+        </div>
+      </section>
+
+      <footer style={{ padding: '40px 56px', textAlign: 'center', background: t.bg }}>
+        <MLogo color={t.ink} small/>
+        <div style={{ fontSize: 11, color: t.muted, letterSpacing: '0.14em', marginTop: 16 }}>
+          © 2026 · DHYANA 根本MUYOGA瑜伽 · <a href={APP_URL} target="_blank" rel="noopener" style={{color:'inherit'}}>muyoga.muzen.store</a>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+Object.assign(window, { V3Landing });
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(<V3Landing themeKey="ivory" status="countdown"/>);
+  </script>
+</body>
+</html>
